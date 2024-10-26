@@ -14,5 +14,5 @@ class Fraction(BaseModel):
     )
     point: Mapped[list["Point"]] = relationship(
         back_populates="fraction",
-        secondary="pointfraction",
+        secondary="point_fraction",
     )
