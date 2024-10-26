@@ -20,9 +20,9 @@ jobs:
         run: docker build -t ${{ secrets.DOCKER_BASE_REPO }}-admin -f ./Dockerfile .
 
       - name: Tagging image
-        working-directory: ./src/admin
+        working-directory: ./src/frontend
         run: docker image tag ${{ secrets.DOCKER_BASE_REPO }}-admin ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_BASE_REPO }}-admin:latest
 
       - name: Push image
-        working-directory: ./src/admin
+        working-directory: ./src/frontend
         run: docker push ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_BASE_REPO }}-admin:latest
