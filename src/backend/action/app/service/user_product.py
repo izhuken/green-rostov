@@ -26,7 +26,6 @@ class UserProductService(BaseService):
 
     async def create(self, data: UserProductInsert, **kwargs) -> SuccessResponse | ErrorResponse:
         result = {"user_product": [], "product": []}
-        
         integreted = requests.post("https://proverkacheka.com/api/v1/check/get", json={
             "token": "29694.21OovkfN3Kpaufs3a",
             "qrraw": data.qrraw

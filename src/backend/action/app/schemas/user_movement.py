@@ -1,6 +1,8 @@
 from datetime import datetime
 from uuid import UUID
 
+from pydantic import BaseModel
+
 from ._base import BaseSchema
 from .movement import MovementRead
 
@@ -14,6 +16,17 @@ class UserMovementRead(UserMovementBase):
     id: UUID
     create_time: datetime
     update_time: datetime
+
+
+class UserMovenentInsert(BaseModel):
+    mark: str
+    model: str
+    distance_value: int
+    user_id: UUID
+
+class UserMovementResult(BaseSchema):
+    user_movement: UserMovementRead
+    movement: MovementRead
 
 class UserMovementDepthRead(UserMovementRead):
     movement: MovementRead | None
