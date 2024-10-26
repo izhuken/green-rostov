@@ -21,3 +21,9 @@ COPY --from=builder /app/requirements.txt .
 
 RUN pip install --no-cache /wheels/*
 COPY ./ ./
+
+RUN chmod +x /app/entrypoint.sh
+
+EXPOSE 4000
+
+ENTRYPOINT [ "/app/entrypoint.sh" ]
