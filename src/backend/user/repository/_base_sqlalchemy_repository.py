@@ -153,15 +153,8 @@ class BaseSQLAlchemyRepository(IBaseRepository):
             return ErrorDTO('Database error', 500)
         
     async def delete(self, id: UUID) -> SuccessDTO[str] | ErrorDTO[str | int]:
-        if self.soft_deletion:
-            statement = (
-                update(self.model)
-                .values(hidden=True)
-                .where(self.model.id == id)
-                .returning(self.model)
-            )
-        else:
-            statement = (
+
+        statement = (
                 delete(self.model).where(self.model.id == id).returning(self.model)
             )
         try:

@@ -11,19 +11,19 @@ class File(BaseModel):
 
     url: Mapped[str] = mapped_column(unique=True, nullable=False)
     
-    user_id: Mapped[UUID] = mapped_column(
-        ForeignKey("user.id", ondelete="SET NULL"),
+    task_approvement_id: Mapped[UUID | None] = mapped_column(
+        ForeignKey("task_approvement.id", ondelete="SET NULL"),
         nullable=True,
         default=None,)
     
-    reword_id: Mapped[UUID] = mapped_column(
-        ForeignKey("reword.id", ondelete="SET NULL"),
+    task_id: Mapped[UUID | None] = mapped_column(
+        ForeignKey("task.id", ondelete="SET NULL"),
         nullable=True,
         default=None,)
     
-    reword: Mapped["Reword"] = relationship(
-        back_populates="file",
+    task: Mapped["Task"] = relationship(
+        back_populates="logo",
         )
-    user: Mapped["User"] = relationship(
+    task_approvement: Mapped["TaskApprovement"] = relationship(
         back_populates="file",
         )

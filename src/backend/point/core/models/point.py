@@ -14,5 +14,8 @@ class Point(BaseModel):
     is_hidden: Mapped[bool] = mapped_column(nullable=False, default=False)
     fraction: Mapped[list["Fraction"]] = relationship(
         back_populates="point",
-        secondary="pointfraction",
+        secondary="point_fraction",
     )
+    file: Mapped["File"] = relationship(
+        back_populates="point",
+        )

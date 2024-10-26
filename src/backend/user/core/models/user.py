@@ -17,3 +17,7 @@ class User(BaseModel):
     avatar: Mapped["File"] = relationship(
         back_populates="user",
     )
+    reword: Mapped[list["Reword"]] = relationship(
+        back_populates="user",
+        secondary="user_reword",
+        )
