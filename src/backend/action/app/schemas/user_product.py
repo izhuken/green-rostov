@@ -1,6 +1,8 @@
 from datetime import datetime
 from uuid import UUID
 
+from pydantic import BaseModel
+
 from ._base import BaseSchema
 from .product import ProductRead
 
@@ -10,10 +12,20 @@ class UserProductBase(BaseSchema):
     user_id: UUID
     quantity: int
 
+class UserProductInsert(BaseModel):
+    qrraw: str
+    user_id: UUID
+
+
+
 class UserProductRead(UserProductBase):
     id: UUID
     create_time: datetime
     update_time: datetime
+
+class UserProductResult(BaseSchema):
+    user_product: list[UserProductRead]
+    product: list[ProductRead]
 
 class UserProductDepthRead(UserProductRead):
     product: ProductRead | None

@@ -2,8 +2,9 @@ from uuid import UUID
 
 from app.schemas.response import ErrorResponse, SuccessResponse
 from app.schemas.user_movement import (
-    UserMovementCreate,
     UserMovementRead,
+    UserMovementResult,
+    UserMovenentInsert,
 )
 from app.service.user_movement import UserMovementService
 from fastapi import APIRouter, HTTPException, Request
@@ -46,8 +47,8 @@ async def get_by_id(id: UUID) -> UserMovementRead:
     return data
 
 
-@user_movement_router.post("/create", response_model=UserMovementRead, status_code=201)
-async def create(data: UserMovementCreate) -> UserMovementRead:
+@user_movement_router.post("/create", response_model=UserMovementResult, status_code=201)
+async def create(data: UserMovenentInsert) -> UserMovementResult:
     data = await service.create(data=data)
 
     if isinstance(data, ErrorResponse):

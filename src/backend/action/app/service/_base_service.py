@@ -59,15 +59,16 @@ class BaseService():
                 return ErrorResponse(
                     detail=file_url.detail, status_code=file_url.status_code
                 )
-
+        
             result = await self._repository.create(data=data, file=file_url)
 
         else:
             result = await self._repository.create(data=data)
 
+
         if hasattr(result, "detail"):
             return ErrorResponse(detail=result.detail, status_code=result.status_code)
-
+        print(result.data.__dict__)
         return self._serializer.model_validate(result.data)
 
     async def update(
