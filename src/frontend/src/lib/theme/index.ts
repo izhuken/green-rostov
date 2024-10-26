@@ -1,3 +1,18 @@
-import { defineTokens } from '@chakra-ui/react';
+import { extendTheme } from '@chakra-ui/react';
 
-export const theme = defineTokens({});
+export const theme = extendTheme({
+  components: {
+    Td: {
+      base: {
+        display: 'flex',
+        alignItems: 'center',
+      },
+      variants: {
+        events: {
+          display: 'flex',
+          alignItems: 'center',
+        },
+      },
+    },
+  },
+});
