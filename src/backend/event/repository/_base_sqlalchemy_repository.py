@@ -4,10 +4,9 @@ from core.database import SESSION
 from core.models._base import BaseModel
 from dto.exception_dto import ErrorDTO
 from dto.success_dto import SuccessDTO
-from sqlalchemy import Select, delete, select, update
+from sqlalchemy import Select, delete, func, select, update
 from sqlalchemy.exc import DBAPIError, IntegrityError
 from sqlalchemy.orm import selectinload
-from sqlalchemy.orm.attributes import flag_modified
 
 from ._base_repository import IBaseRepository
 
@@ -141,8 +140,12 @@ class BaseSQLAlchemyRepository(IBaseRepository):
                 data = (await session.execute(statement)).unique().scalar()
                 if data is None:
                     return ErrorDTO('Data not found', 404)
-                if hasattr(self.model, 'status_id'):
-                    flag_modified(data, 'status_id')
+                if hasattr(self.model, 'approved'):
+                    count_per_users = (await session.execute(select(func.count()).select_from(self.model).filter(self.model.approved == True, self.model.user_id == data.user_id))).scalars().all()
+                    await session.commit()
+
+                    return SuccessDTO(data={"data": data, "count": count_per_users})
+
                 await session.commit()
                 await session.refresh(data)
                 return SuccessDTO[self.model](data)

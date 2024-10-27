@@ -13,3 +13,4 @@ minio
 python-multipart
 pydantic[email]
 email-validator
+confluent-kafka

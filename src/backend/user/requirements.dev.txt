@@ -13,3 +13,4 @@ python-multipart
 ruff
 pydantic[email]
 email-validator
+confluent-kafka

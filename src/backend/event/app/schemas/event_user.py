@@ -1,7 +1,7 @@
 from datetime import datetime
 from uuid import UUID
 
-from pydantic import Field
+from pydantic import BaseModel, Field
 
 from ._base import BaseSchema
 from .file import FileRead
@@ -19,6 +19,9 @@ class EventUserRead(EventUserBase):
     create_time: datetime
     update_time: datetime
 
+class EventUserDepthRead(EventUserRead):
+    file: list[FileRead] | None
+
 class EventUserCreate(EventUserBase):
     pass
 
@@ -26,13 +29,8 @@ class EventUserDepthRead(EventUserRead):
     file: list[FileRead] | None
 
 
-# class EventUserUpdate(BaseModel):
-#     title: str | None = Field(default=None)
-#     description: str | None = Field(default=None)
-#     rating: int | None = Field(default=None)
-#     creator_id: bool = Field(default=False)
-#     logo: FileRead | None = Field(default=None)
-
+class EventUserUpdate(BaseModel):
+    approved: bool = Field(default=False)
 # class UserSearch(BaseModel):
 #     username: str | None = Field(default=None)
 #     email: EmailStr | None = Field(default=None)

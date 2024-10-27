@@ -1,6 +1,8 @@
 from datetime import datetime
 from uuid import UUID
 
+from pydantic import BaseModel, Field
+
 from ._base import BaseSchema
 from .file import FileRead
 
@@ -9,6 +11,7 @@ class TaskApprovementBase(BaseSchema):
     description: str
     user_id: UUID
     task_id: UUID
+    approved: bool = Field(default=False)
 
 class TaskApprovementRead(TaskApprovementBase):
     id: UUID
@@ -22,11 +25,8 @@ class TaskApprovementDepthRead(TaskApprovementRead):
 class TaskApprovementCreate(TaskApprovementBase):
     pass
 
-# class TaskApprovementUpdate(BaseModel):
-#     title: str | None = Field(default=None)
-#     user_id: str | None = Field(default=None)
-#     ratintask_idg: int | None = Field(default=None)
-
+class TaskApprovementUpdate(BaseModel):
+    approved: bool = Field(default=False)
 
 # class UserSearch(BaseModel):
 #     username: str | None = Field(default=None)

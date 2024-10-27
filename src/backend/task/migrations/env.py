@@ -31,6 +31,7 @@ config.set_section_option(section, "DATABASE_URL", SQLALCHEMY_DATABASE_URL)
 # my_important_option = config.get_main_option("my_important_option")
 # ... etc.
 
+
 def run_migrations_offline() -> None:
     """Run migrations in 'offline' mode.
 
