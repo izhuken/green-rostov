@@ -1,5 +1,5 @@
 import { DefaultButton, DefaultInput } from '@/assets';
-import { pointApi } from '@/assets/config/api';
+import { authApi } from '@/assets/config/api';
 import { FormBaseLayout } from '@/components/form-base-layout';
 import {
   Modal,
@@ -15,39 +15,35 @@ import React from 'react';
 import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 
-interface ModalPointProps {
+interface ModalUserProps {
   isOpen: boolean;
   onClose: () => void;
-  latLon: [number, number];
 }
 
-interface NewPointPayload {
-  title: string;
-  address: string;
+interface NewModeratorPayload {
+  username: string;
+  email: string;
+  phone: string;
+  password: string;
 }
 
-export const ModalPoint: React.FC<ModalPointProps> = ({
-  isOpen,
-  onClose,
-  latLon,
-}) => {
+export const ModalUser: React.FC<ModalUserProps> = ({ isOpen, onClose }) => {
   const initialRef = React.useRef(null);
   const finalRef = React.useRef(null);
-  const methods = useForm<NewPointPayload>();
+  const methods = useForm<NewModeratorPayload>();
   const queryClient = useQueryClient();
   const { mutate } = useMutation({
-    mutationFn: async (data: NewPointPayload) => {
-      return await axios.post(`${pointApi}/create`, {
+    mutationFn: async (data: NewModeratorPayload) => {
+      return await axios.post(`${authApi}/sign-up`, {
         ...data,
-        latitude: String(latLon[0]),
-        longitude: String(latLon[1]),
-        is_hidden: false,
+        rating: 0,
+        is_admin: true,
       });
     },
     onSuccess: () => {
       toast.success('Успешно!');
       queryClient.invalidateQueries({
-        queryKey: ['point-list'],
+        queryKey: ['user-list'],
       });
     },
   });
@@ -62,19 +58,19 @@ export const ModalPoint: React.FC<ModalPointProps> = ({
       >
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader textAlign='center'> Добавить точку</ModalHeader>
+          <ModalHeader textAlign='center'>Добавить модератора</ModalHeader>
           <ModalCloseButton />
           <ModalBody pb={6}>
             <FormBaseLayout
               methods={methods}
-              onSub={(data: NewPointPayload) => {
+              onSub={(data: NewModeratorPayload) => {
                 mutate(data);
                 onClose();
               }}
             >
               <DefaultInput
-                name='title'
-                placeholder='Название'
+                name='username'
+                placeholder='Имя'
                 registerOptions={{
                   required: {
                     value: true,
@@ -83,8 +79,28 @@ export const ModalPoint: React.FC<ModalPointProps> = ({
                 }}
               />
               <DefaultInput
-                name='address'
-                placeholder='Адрес'
+                name='email'
+                placeholder='E-mail'
+                registerOptions={{
+                  required: {
+                    value: true,
+                    message: 'Обязательное поле',
+                  },
+                }}
+              />
+              <DefaultInput
+                name='phone'
+                placeholder='Телефон'
+                registerOptions={{
+                  required: {
+                    value: true,
+                    message: 'Обязательное поле',
+                  },
+                }}
+              />
+              <DefaultInput
+                name='password'
+                placeholder='Пароль (сохраните себе)'
                 registerOptions={{
                   required: {
                     value: true,

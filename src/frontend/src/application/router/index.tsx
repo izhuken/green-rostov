@@ -1,5 +1,6 @@
 import '@/assets/styles/base.css';
 import { PageLayout } from '@/components/page-layout';
+import { Homepage, SignIn } from '@/pages';
 import { AdminEvents } from '@/pages/admin/admin-events';
 import { EcoPoints } from '@/pages/admin/admin-point';
 import { AdminStat } from '@/pages/admin/admin-statistic';
@@ -11,10 +12,12 @@ export const AppRouter = () => {
   return (
     <PageLayout>
       <Routes>
+        <Route key={'statistic'} element={<SignIn />} path='/login' />
         <Route key={'events'} element={<AdminEvents />} path='/admin/events' />
         <Route key={'ecoPoint'} element={<EcoPoints />} path='/admin/points' />
         <Route key={'users'} element={<AdminUsers />} path='/admin/users' />
         <Route key={'statistic'} element={<AdminStat />} path='/admin/stat' />
+        <Route key={'home'} element={<Homepage />} path='/' />
       </Routes>
     </PageLayout>
   );

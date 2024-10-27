@@ -12,7 +12,7 @@ interface HeaderProps {
 export const Header: React.FC<HeaderProps> = (props) => {
   return (
     <>
-      <Box w={'full'} className={HeaderStyles.header}>
+      <Box w={'full'} className={HeaderStyles.header} pt={10}>
         <h1 className={HeaderStyles.title}>{props.title}</h1>
         <img src={out}></img>
       </Box>

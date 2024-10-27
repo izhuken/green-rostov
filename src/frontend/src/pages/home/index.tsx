@@ -1,12 +1,16 @@
 import { DefaultButton, HomepageStyles } from '@/assets';
 import { Header } from '@/components';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router';
 
 interface HomepageProps {}
 
 export const Homepage: React.FC<HomepageProps> = () => {
   const navigate = useNavigate();
+
+  useEffect(() => {
+    navigate('/login');
+  }, []);
 
   return (
     <>

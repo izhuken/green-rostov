@@ -8,7 +8,7 @@ import { FormBaseLayout } from '../form-base-layout';
 interface SignInLayoutProps {}
 
 interface SignInData {
-  username: string;
+  email: string;
   password: string;
 }
 
@@ -26,8 +26,8 @@ export const SignInLayout: React.FC<SignInLayoutProps> = () => {
         }}
       >
         <DefaultInput
-          name='username'
-          placeholder='Nick name'
+          name='email'
+          placeholder='Email'
           registerOptions={{
             required: {
               value: true,

@@ -1,4 +1,4 @@
-import { Header, SignInLayout } from '@/components';
+import { SignInLayout } from '@/components';
 import React from 'react';
 
 interface SignInProps {}
@@ -6,7 +6,6 @@ interface SignInProps {}
 export const SignIn: React.FC<SignInProps> = () => {
   return (
     <>
-      <Header />
       <SignInLayout />
     </>
   );

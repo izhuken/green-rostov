@@ -1,5 +1,5 @@
-import { eventApi } from '@/assets/config/api';
-import { Event, PaginatedResponse } from '@/entities';
+import { userApi } from '@/assets/config/api';
+import { PaginatedResponse, User } from '@/entities';
 import {
   Button,
   Table,
@@ -13,16 +13,16 @@ import {
 } from '@chakra-ui/react';
 import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
-import { ModalEvent } from './modal/createEventModal';
+import { ModalUser } from './modal/createUserModal';
 import { TableRow } from './row';
 
-interface TableEventsProps {}
+interface UsersTableProps {}
 
-export const TableEvents: React.FC<TableEventsProps> = () => {
+export const UsersTable: React.FC<UsersTableProps> = () => {
   const { data } = useQuery({
-    queryKey: ['event-list'],
+    queryKey: ['user-list'],
     queryFn: async () =>
-      await axios.get<PaginatedResponse<Event[]>>(`${eventApi}/event/get_all`),
+      await axios.get<PaginatedResponse<User[]>>(`${userApi}/get_all`),
   });
   const { isOpen, onOpen, onClose } = useDisclosure();
 
@@ -32,19 +32,21 @@ export const TableEvents: React.FC<TableEventsProps> = () => {
         <Table position={'relative'}>
           <Thead>
             <Tr>
-              <Th>Наименование</Th>
-              <Th>Описание</Th>
+              <Th>Имя</Th>
+              <Th>E-mail</Th>
+              <Th>Телефон</Th>
               <Th>Рейтинг</Th>
+              <Th>Админ?</Th>
               <Th>Создан</Th>
             </Tr>
           </Thead>
           <Tbody>
             {data?.data &&
-              data.data.data.map((e) => <TableRow key={e.id} event={e} />)}
+              data.data.data.map((u) => <TableRow key={u.id} user={u} />)}
           </Tbody>
           <Tfoot>
             <Tr>
-              <Th colSpan={5}>
+              <Th colSpan={6}>
                 <Button onClick={onOpen} w={'full'}>
                   +
                 </Button>
@@ -53,7 +55,7 @@ export const TableEvents: React.FC<TableEventsProps> = () => {
           </Tfoot>
         </Table>
       </TableContainer>
-      <ModalEvent onClose={onClose} isOpen={isOpen} />
+      <ModalUser onClose={onClose} isOpen={isOpen} />
     </>
   );
 };
