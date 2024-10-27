@@ -2,8 +2,9 @@ from uuid import UUID
 
 from app.schemas.response import ErrorResponse, SuccessResponse
 from app.schemas.user_product import (
-    UserProductCreate,
+    UserProductInsert,
     UserProductRead,
+    UserProductResult,
 )
 from app.service.user_product import UserProductService
 from fastapi import APIRouter, HTTPException, Request
@@ -46,8 +47,8 @@ async def get_by_id(id: UUID) -> UserProductRead:
     return data
 
 
-@user_product_router.post("/create", response_model=UserProductRead, status_code=201)
-async def create(data: UserProductCreate) -> UserProductRead:
+@user_product_router.post("/create", response_model=UserProductResult, status_code=201)
+async def create(data: UserProductInsert) -> UserProductResult:
     data = await service.create(data=data)
 
     if isinstance(data, ErrorResponse):

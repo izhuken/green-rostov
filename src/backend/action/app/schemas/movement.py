@@ -9,6 +9,7 @@ from ._base import BaseSchema
 class MovementBase(BaseSchema):
     title: str
     co2_per_km: float
+    model: str
 
 class MovementRead(MovementBase):
     id: UUID
@@ -21,6 +22,7 @@ class MovementCreate(MovementBase):
 class MovementUpdate(BaseModel):
     title: str | None = Field(default=None)
     co2: float | None = Field(default=None)
+    model: str | None = Field(default=None)
 
 # class UserSearch(BaseModel):
 #     username: str | None = Field(default=None)
