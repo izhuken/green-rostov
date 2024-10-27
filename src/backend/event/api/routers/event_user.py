@@ -1,6 +1,11 @@
 from uuid import UUID
 
-from app.schemas.event_user import EventUserCreate, EventUserDepthRead, EventUserRead
+from app.schemas.event_user import (
+    EventUserCreate,
+    EventUserDepthRead,
+    EventUserRead,
+    EventUserUpdate,
+)
 from app.schemas.response import ErrorResponse, SuccessResponse
 from app.service.event_user import EventUserService
 from fastapi import APIRouter, HTTPException, Request
@@ -53,14 +58,14 @@ async def create(data: EventUserCreate) -> EventUserRead:
     return data
 
 
-# @event_user_router.patch("/update/{id}", response_model=EventUserDepthRead)
-# async def update(id: UUID, data: EventUpdate) -> EventDepthRead:
-#     data = await service.update(id=id, data=data)
+@event_user_router.patch("/update/{id}", response_model=EventUserDepthRead)
+async def update(id: UUID, data: EventUserUpdate) -> EventUserDepthRead:
+    data = await service.update(id=id, data=data)
 
-#     if isinstance(data, ErrorResponse):
-#         raise HTTPException(status_code=data.status_code, detail=data.detail)
+    if isinstance(data, ErrorResponse):
+        raise HTTPException(status_code=data.status_code, detail=data.detail)
 
-#     return data
+    return data
 
 
 @event_user_router.delete("/delete/{id}", response_model=SuccessResponse)

@@ -5,6 +5,7 @@ from app.schemas.task_approvement import (
     TaskApprovementCreate,
     TaskApprovementDepthRead,
     TaskApprovementRead,
+    TaskApprovementUpdate,
 )
 from app.service.task_approvement import TaskApprovementService
 from fastapi import APIRouter, HTTPException, Request
@@ -57,14 +58,14 @@ async def create(data: TaskApprovementCreate) -> TaskApprovementRead:
     return data
 
 
-# @user_point_request_router.patch("/update/{id}", response_model=PointFractionRead)
-# async def update(id: UUID, data: UserPointRequestUpdate) -> PointFractionRead:
-#     data = await service.update(id=id, data=data)
+@task_approvement_router.patch("/update/{id}", response_model=TaskApprovementDepthRead)
+async def update(id: UUID, data: TaskApprovementUpdate) -> TaskApprovementDepthRead:
+    data = await service.update(id=id, data=data)
 
-#     if isinstance(data, ErrorResponse):
-#         raise HTTPException(status_code=data.status_code, detail=data.detail)
+    if isinstance(data, ErrorResponse):
+        raise HTTPException(status_code=data.status_code, detail=data.detail)
 
-#     return data
+    return data
 
 
 @task_approvement_router.delete("/delete/{id}", response_model=SuccessResponse)

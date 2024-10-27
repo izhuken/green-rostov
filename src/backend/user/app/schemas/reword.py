@@ -11,7 +11,7 @@ from .user import UserRead
 
 class RewordBase(BaseSchema):
     title: str
-    description: EmailStr
+    description: str
     rating: int
     condition: dict[str, Any]
 

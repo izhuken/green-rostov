@@ -1,8 +1,8 @@
 """empty message
 
-Revision ID: 531cb2c927f2
+Revision ID: c69d769fee06
 Revises: 
-Create Date: 2024-10-26 15:43:57.444157
+Create Date: 2024-10-27 05:51:39.409563
 
 """
 from typing import Sequence, Union
@@ -12,7 +12,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision: str = '531cb2c927f2'
+revision: str = 'c69d769fee06'
 down_revision: Union[str, None] = None
 branch_labels: Union[str, Sequence[str], None] = None
 depends_on: Union[str, Sequence[str], None] = None
@@ -29,8 +29,7 @@ def upgrade() -> None:
     sa.Column('update_time', sa.DateTime(timezone=True), server_default=sa.text('now()'), nullable=False),
     sa.Column('create_time', sa.DateTime(timezone=True), server_default=sa.text('now()'), nullable=False),
     sa.PrimaryKeyConstraint('id'),
-    sa.UniqueConstraint('id'),
-    sa.UniqueConstraint('title')
+    sa.UniqueConstraint('id')
     )
     op.create_table('event_user',
     sa.Column('title', sa.String(), nullable=False),
@@ -48,12 +47,12 @@ def upgrade() -> None:
     op.create_table('file',
     sa.Column('url', sa.String(), nullable=False),
     sa.Column('event_id', sa.Uuid(), nullable=True),
-    sa.Column('user_id', sa.Uuid(), nullable=True),
+    sa.Column('event_user_id', sa.Uuid(), nullable=True),
     sa.Column('id', sa.Uuid(), nullable=False),
     sa.Column('update_time', sa.DateTime(timezone=True), server_default=sa.text('now()'), nullable=False),
     sa.Column('create_time', sa.DateTime(timezone=True), server_default=sa.text('now()'), nullable=False),
     sa.ForeignKeyConstraint(['event_id'], ['event.id'], ondelete='SET NULL'),
-    sa.ForeignKeyConstraint(['user_id'], ['event_user.id'], ondelete='SET NULL'),
+    sa.ForeignKeyConstraint(['event_user_id'], ['event_user.id'], ondelete='SET NULL'),
     sa.PrimaryKeyConstraint('id'),
     sa.UniqueConstraint('id'),
     sa.UniqueConstraint('url')

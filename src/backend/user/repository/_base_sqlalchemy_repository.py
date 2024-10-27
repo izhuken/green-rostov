@@ -65,6 +65,7 @@ class BaseSQLAlchemyRepository(IBaseRepository):
             async with SESSION() as session:
                 statement = await session.execute(statement)
                 data = statement.scalars().unique().all()
+                print(data)
                 if data is None:
                     return ErrorDTO('Data not found', 404)
                 return SuccessDTO[self.model](data)
@@ -106,12 +107,15 @@ class BaseSQLAlchemyRepository(IBaseRepository):
         insert_data = self.model(**data.model_dump(exclude_unset=True))
         if kwargs.get('file', False):
             insert_data.url = kwargs.get('file')
+        print(data)
         try:
             async with SESSION() as session:
                 session.add(insert_data)
                 await session.commit()
+                print(data)
                 return SuccessDTO[self.model](insert_data)
-        except IntegrityError:
+        except IntegrityError as e:
+            print(e)
             return ErrorDTO('Data already exists', 400)
         
     async def update(

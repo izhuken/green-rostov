@@ -11,6 +11,7 @@ class TaskApprovement(BaseModel):
     __tablename__ = "task_approvement"
 
     description: Mapped[str] = mapped_column(nullable=True, default=None)
+    approved: Mapped[bool] = mapped_column(default=False)
     user_id: Mapped[UUID] = mapped_column(nullable=False)
     task_id: Mapped[UUID] = mapped_column(ForeignKey("task.id", ondelete="SET NULL"),
         nullable=True,
