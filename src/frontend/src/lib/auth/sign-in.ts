@@ -1,12 +1,15 @@
 import { AuthApiCore } from '@/api';
 import { CredentialStorage } from '@/assets';
+import { authApi } from '@/assets/config/api';
+import { TokenPair } from '@/entities';
 import { useMutation } from '@tanstack/react-query';
+import axios from 'axios';
 import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
 import { isWrongResponse } from '../typeguard';
 
 interface LoginData {
-  username: string;
+  email: string;
   password: string;
 }
 
@@ -21,8 +24,8 @@ export const useSignIn = () => {
 
   return useMutation({
     mutationFn: async (credentials: LoginData) => {
-      const tokenPair = await AuthApiCore.signIn({
-        email: credentials.username,
+      const tokenPair = await axios.post<TokenPair>(`${authApi}/sign-in`, {
+        email: credentials.email,
         password: credentials.password,
       });
 
@@ -30,8 +33,8 @@ export const useSignIn = () => {
         return null;
       }
 
-      CredentialStorage.set('access', tokenPair.data.access_token);
-      CredentialStorage.set('refresh', tokenPair.data.refresh_token);
+      CredentialStorage.set('access', tokenPair.data.access);
+      CredentialStorage.set('refresh', tokenPair.data.refresh);
 
       return tokenPair;
     },
@@ -40,9 +43,7 @@ export const useSignIn = () => {
     },
     onSuccess: () => {
       toast.success('Успешно!');
-      return setTimeout(() => {
-        return navigate('/');
-      }, 1500);
+      return navigate('/admin/events');
     },
   });
 };

@@ -1,4 +1,4 @@
-/* base colors */ 
+/* base colors */
 $main-color: #fff;
 
 /* z-indexes */
@@ -7,7 +7,6 @@ $content-index: 2;
 $modal-background-index: 3;
 $modal-index: 4;
 $alert-index: 5;
-
 
 @mixin flex {
   display: flex;
@@ -40,7 +39,7 @@ $alert-index: 5;
   font-size: $size;
   font-weight: $weight;
   line-height: $line-height;
-  font-family: $family;
+  font-family: Montserrat;
 }
 
 @mixin coverBackground {

@@ -1,3 +1,3 @@
-import { defineTokens } from '@chakra-ui/react';
+import { extendTheme } from '@chakra-ui/react';
 
-export const theme = defineTokens({});
+export const theme = extendTheme({});
