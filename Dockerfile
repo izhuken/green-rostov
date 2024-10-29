@@ -17,7 +17,7 @@ WORKDIR /app
 RUN apk add libpq
 
 RUN --mount=type=bind,from=builder,source=/app/wheels,target=/wheels
-RUN --mount=type=bind,from=builder,source=/app/requirements.txt,target=/app/
+RUN --mount=type=bind,from=builder,source=/app/requirements.txt,target=/app/requirements.txt
 
 RUN pip install --no-cache /wheels/*
 COPY ./ ./
