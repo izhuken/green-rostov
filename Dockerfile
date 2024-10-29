@@ -8,25 +8,30 @@ ENV PYTHONDONTWRITEBYTECODE=1
 
 COPY ./requirements.txt ./
 
-RUN pip wheel --no-cache-dir --no-deps --wheel-dir /app/wheels -r requirements.txt
+RUN pip install --no-cache-dir wheel
+RUN pip wheel --no-cache-dir --wheel-dir /app/wheels -r requirements.txt
 
 FROM python:3.12-alpine
 
 ENV PYTHONUNBUFFERED=1
 ENV PYTHONDONTWRITEBYTECODE=1
 
+# Create a non-root user and group
 RUN addgroup -S appgroup && adduser -S appuser -G appgroup
 
+# Set the working directory
 WORKDIR /app
 
-RUN apk add libpq
-
+# Install the wheels
 RUN --mount=type=bind,from=builder,source=/app/wheels,target=/wheels pip install --no-cache-dir --no-index --find-links=/wheels /wheels/*
 
+# Set file permissions and ownership
 RUN chown -R appuser:appgroup /app
 
+# Switch to the non-root user
 USER appuser
 
+# Copy the rest of the application code into the container
 COPY . .
 
 EXPOSE 8000
