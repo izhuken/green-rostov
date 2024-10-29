@@ -21,12 +21,11 @@ WORKDIR /app
 
 RUN apk add libpq
 
-RUN --mount=type=bind,from=builder,source=/app/wheels,target=/
+RUN --mount=type=bind,from=builder,source=/app/wheels,target=/tmp/wheels
 
-RUN ls
-RUN ls / 
+RUN ls /tmp
 
-RUN pip install --no-cache /wheels/*
+RUN pip install --no-cache /tmp/wheels/*
 COPY . .
 
 EXPOSE 8000
