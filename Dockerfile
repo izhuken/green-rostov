@@ -21,7 +21,7 @@ WORKDIR /app
 
 RUN apk add libpq
 
-RUN --mount=type=bind,from=builder,source=/app/wheels,target=/wheels/
+RUN --mount=type=bind,from=builder,source=/app/wheels,target=/
 
 RUN ls
 RUN ls / 
